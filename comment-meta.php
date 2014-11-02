@@ -51,12 +51,12 @@ function cme_comment_meta_box($comment) {
 				if ( is_serialized_string( $entry['meta_value'] ) ) {
 					$entry['meta_value'] = maybe_unserialize( $entry['meta_value'] );
 				} else {
-					$entry['meta_value'] = "SERIALIZED DATA";
+					$entry['meta_value'] = array_map( 'strip_tags', unserialize( $entry['meta_value'] ) );
+					$entry['meta_value'] = '<pre>' . print_r( $entry['meta_value'], true ) . '</pre>';
 				}
 			}
 
 			$entry['meta_key'] = esc_attr($entry['meta_key']);
-			$entry['meta_value'] = $entry['meta_value'];
 			$entry['meta_id'] = (int) $entry['meta_id'];
 
 			echo "<div style=\"overflow: auto; clear: both;\">\n";
